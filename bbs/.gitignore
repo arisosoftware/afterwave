@@ -31,8 +31,6 @@ hs_err_pid*
 =======
 # eclipse
 .settings/
-.classpath
-.project
 logs/
 
 # idea

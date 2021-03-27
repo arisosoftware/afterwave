@@ -1,0 +1,10 @@
+html {
+  min-height: 100%;
+  display: flex;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+}

@@ -1,0 +1,3 @@
+wget https://raw.githubusercontent.com/THUNLP-AIPoet/Datasets/master/CCPC/ccpc_train_v1.0.json -P ./Dataset/DatasetRaw/ccpc_train.json
+wget https://raw.githubusercontent.com/THUNLP-AIPoet/Datasets/master/CCPC/ccpc_valid_v1.0.json -P ./Dataset/DatasetRaw/ccpc_valid.json
+wget https://raw.githubusercontent.com/THUNLP-AIPoet/Datasets/master/CCPC/ccpc_test_v1.0.json -P ./Dataset/DatasetRaw/ccpc_test.json

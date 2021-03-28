@@ -1,7 +1,6 @@
 import numpy as np
-import gen_roberta.config
-
-config = gen_roberta.config
+import gen_roberta_config
+ 
 
 def generate_random_poetry(tokenizer, model, s='', num=5, count=4):
     """
@@ -19,7 +18,7 @@ def generate_random_poetry(tokenizer, model, s='', num=5, count=4):
     segment_ids = segment_ids[:-1]
     # 保存所有预测出的id的列表
     target_ids = []
-    while len(token_ids) + len(target_ids) < config.MAX_LEN:
+    while len(token_ids) + len(target_ids) < gen_roberta_config.MAX_LEN:
         # 将给定的初始token和预测出的token扩展到一起，作为输入
         _target_ids = token_ids + target_ids
         _segment_ids = segment_ids + [0 for _ in target_ids]
@@ -61,7 +60,7 @@ def generate_poetry(tokenizer, model, num=5, count=4):
     segment_ids = segment_ids[:-1]
     # 保存所有预测出的id的列表
     target_ids = []
-    while len(token_ids) + len(target_ids) < config.MAX_LEN:
+    while len(token_ids) + len(target_ids) < gen_roberta_config.MAX_LEN:
         # 将给定的初始token和预测出的token扩展到一起，作为输入
         _target_ids = token_ids + target_ids
         _segment_ids = segment_ids + [0 for _ in target_ids]

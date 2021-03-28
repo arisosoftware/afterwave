@@ -3,10 +3,10 @@ from bert4keras.layers import Loss
 from bert4keras.backend import keras, K
 from bert4keras.optimizers import Adam
 from keras.models import Model
-from gen_roberta.dataset import keep_words
-import gen_roberta.config
+from dataset import keep_words
+import gen_roberta_config
 
-config = gen_roberta.config
+config = gen_roberta_config
 
 class CrossEntropy(Loss):
     """交叉熵作为loss，并mask掉padding部分

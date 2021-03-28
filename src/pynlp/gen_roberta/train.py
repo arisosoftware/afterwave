@@ -1,6 +1,6 @@
 import os
 # os.environ["TF_KERAS"]="1"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+# os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 def warn(*args, **kwargs):
     pass
 import warnings
@@ -9,7 +9,7 @@ warnings.warn = warn
 from bert4keras.backend import keras
 from dataset import PoetryDataGenerator, tokenizer, poetry
 from model import model
-import config
+import gen_roberta_config
 import utils
 
 class Evaluator(keras.callbacks.Callback):
@@ -22,15 +22,15 @@ class Evaluator(keras.callbacks.Callback):
         # 保存最优
         if logs['loss'] <= self.lowest:
             self.lowest = logs['loss']
-            model.save_weights(config.BEST_MODEL_PATH)
+            model.save_weights(gen_roberta_config.BEST_MODEL_PATH)
         print(utils.generate_random_poetry(tokenizer, model))
 
 # 创建数据生成器
-data_generator = PoetryDataGenerator(poetry, batch_size=config.BATCH_SIZE)
+data_generator = PoetryDataGenerator(poetry, batch_size=gen_roberta_config.BATCH_SIZE)
 # 开始训练
 model.fit(
         data_generator.forfit(),
         steps_per_epoch=data_generator.steps,
-        epochs=config.TRAIN_EPOCHS,
+        epochs=gen_roberta_config.TRAIN_EPOCHS,
         callbacks=[Evaluator()]
     )

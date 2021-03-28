@@ -80,3 +80,5 @@ venv/
 __pycache__/
 /bin/
 /logs/
+src/pynlp/gen_roberta/best_model_roberta.h5
+src/pynlp/rnn/data/rnn_tang_poetry_weights.hdf5

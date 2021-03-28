@@ -2,9 +2,10 @@ from collections import defaultdict
 from bert4keras.tokenizers import Tokenizer, load_vocab
 from bert4keras.snippets import sequence_padding, DataGenerator
 import numpy as np
-import gen_roberta.config
+import gen_roberta_config
+import json
 
-config = gen_roberta.config
+config = gen_roberta_config
 
 # 预训练模型参数
 config_path = config.CONFIG_PATH
@@ -20,35 +21,35 @@ min_word_frequency = config.MIN_WORD_FREQUENCY
 # mini batch 大小
 batch_size = config.BATCH_SIZE
 
-# 加载数据集
-with open(config.DATASET_PATH, 'r', encoding='utf-8') as f:
-    lines = f.readlines()
-    # 将冒号统一成相同格式
-    lines = [line.replace('：', ':') for line in lines]
+# # 加载数据集 结果放在poetry 列表中
+# with open(config.DATASET_PATH, 'r', encoding='utf-8') as f:
+#     lines = f.readlines()
+#     # 将冒号统一成相同格式
+#     lines = [line.replace('：', ':') for line in lines]
 # 数据集列表
 poetry = []
-# 逐行处理读取到的数据
-for line in lines:
-    # 有且只能有一个冒号用来分割标题
-    if line.count(':') != 1:
-        continue
-    # 后半部分不能包含禁止词
-    __, last_part = line.split(':')
-    ignore_flag = False
-    for dis_word in disallowed_words:
-        if dis_word in last_part:
-            ignore_flag = True
+
+max_poems = 800
+load_poems = 1
+
+with open(config.DATASET_PATH, 'r', encoding='utf-8') as f:
+    for line in f.readlines():
+        print (line )
+        poetry_line = json.loads(line)
+        poemline =  poetry_line["content"]
+        #print (poemline)
+        poemline = poemline.replace('|',':')
+        load_poems = load_poems + 1
+        print (load_poems, poemline)
+        poetry.append(poemline)
+        if load_poems > max_poems :
             break
-    if ignore_flag:
-        continue
-    # 长度不能超过最大长度
-    if len(last_part) > max_len - 2:
-        continue
-    poetry.append(last_part)
 
 # 预训练模型中的词典和分词器
 _token_dict = load_vocab(dict_path)
 _tokenizer = Tokenizer(dict_path, do_lower_case=True)
+
+print ("loaded.")
 
 # 统计所有词的词频
 word_frequency_count = defaultdict(int)

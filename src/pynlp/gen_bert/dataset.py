@@ -30,21 +30,21 @@ poetry = []
 # 逐行处理读取到的数据
 for line in lines:
     # 有且只能有一个冒号用来分割标题
-    if line.count(':') != 1:
-        continue
+    #--##if line.count(':') != 1:
+    #--##    continue
     # 后半部分不能包含禁止词
-    __, last_part = line.split(':')
-    ignore_flag = False
-    for dis_word in disallowed_words:
-        if dis_word in last_part:
-            ignore_flag = True
-            break
-    if ignore_flag:
-        continue
+    ##__, last_part = line.split(':')
+    ##ignore_flag = False
+    ##for dis_word in disallowed_words:
+    ##    if dis_word in last_part:
+    ##        ignore_flag = True
+    ##        break
+    ##i##f ignore_flag:
+    ##    continue
     # 长度不能超过最大长度
-    if len(last_part) > max_len - 2:
+    if len(line) > max_len - 2:
         continue
-    poetry.append(last_part)
+    poetry.append(line)
 
 # 预训练模型中的词典和分词器
 _token_dict = load_vocab(dict_path)

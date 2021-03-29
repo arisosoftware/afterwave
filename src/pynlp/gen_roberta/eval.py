@@ -7,12 +7,12 @@ warnings.warn = warn
 
 from dataset import tokenizer
 from model import model
-import config
+import gen_roberta_config
 import utils
 import argparse
 
 # 加载训练好的模型
-model.load_weights(config.BEST_MODEL_PATH)
+model.load_weights(gen_roberta_config.BEST_MODEL_PATH)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='诗歌生成器  功能：1.随机生成一首诗  2.根据开头生成后面的诗句  3.生成藏头诗')

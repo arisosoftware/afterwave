@@ -29,4 +29,4 @@ output = CrossEntropy(1)([model.inputs[0], model.outputs[0]])
 model = Model(model.inputs, output)
 model.compile(optimizer=Adam(config.LR))
 
-# model.summary()
+model.summary()

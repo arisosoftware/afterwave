@@ -1,5 +1,6 @@
 import os
-# os.environ["TF_KERAS"]="1"
+
+os.environ["TF_KERAS"]="1"
 # os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 def warn(*args, **kwargs):
     pass
@@ -18,12 +19,15 @@ class Evaluator(keras.callbacks.Callback):
     def __init__(self):
         self.lowest = 1e10
 
+    model.load_weights(gen_roberta_config.BEST_MODEL_PATH)
+
     def on_epoch_end(self, epoch, logs=None):
         # 保存最优
         if logs['loss'] <= self.lowest:
             self.lowest = logs['loss']
             model.save_weights(gen_roberta_config.BEST_MODEL_PATH)
-        print(utils.generate_random_poetry(tokenizer, model))
+            print(utils.generate_random_poetry(tokenizer, model))
+
 
 # 创建数据生成器
 data_generator = PoetryDataGenerator(poetry, batch_size=gen_roberta_config.BATCH_SIZE)

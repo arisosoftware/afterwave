@@ -1,3 +1,9 @@
+import configparser
+import os
+import json
+
+
+
 # 预训练的模型参数
 CONFIG_PATH = './logs/bert_config.json'
 CHECKPOINT_PATH = './logs/bert_model.ckpt'

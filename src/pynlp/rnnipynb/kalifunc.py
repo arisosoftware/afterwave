@@ -11,42 +11,52 @@ import numpy as np
 def kelly(b, p):
     return (p * (b + 1) - 1) / b
 
-def playAndSave(round,b, p, n, pre_money):
+def playAndSave(rank,b, p, n, pre_money):
     # b 赔率，p 获胜概率 n 下注次数
     # 赔率计算方式：赚的钱(包含本金) / 亏损的钱
     # pre_money 本金
     # result 投注比例
     # r 每次投入本金比例    
-    bidRate = kelly(b, p)
+    bidRate = kelly(b, p) +0.1
+    winAlotRate = 30
+    winAlot = pre_money * winAlotRate
     count = 0
-    if round == 1:
+    if rank == 1:
         print("本金%.4f\n赔率为%.4f\n胜率为%.4f\n投注比例 %.4f" % (pre_money, b, p, bidRate))
 
     money = pre_money
-    
+    bidMoney =0
     x = [1]
     y = [pre_money]
     for i in range(2, n + 1):
         te = random.random()
-        bidMoney  = pre_money * bidRate;
+        bidMoney  = round ( money * bidRate *1.0)
+        #print (bidMoney)
+
+        if bidMoney == 0:
+            bidMoney = money
+
         if te <= p:
             money = money + bidMoney
         else:
             money = money - bidMoney
-            x.append(i)
-            y.append(money)
+
+        x.append(i)
+        y.append(money)
         count = count + 1
         if money <=0 :
+            break
+        if money > winAlot:
             break
 
         #if n <= 2000:
         #    print("%d #" % i, "随机 %.2f" % te, "错" if te > 0.5 else "对", "剩：%.2f" % money , "赌:%.2f" % bidMoney)
-    #print("第%d轮, 运行%d次后，最后剩余%.2f" % (round, count, money))    
-    filename = "Pic_"+ str(round)
+    #print("第%d轮, 运行%d次后，最后剩余%.2f" % (rank, count, money))    
+    filename = "P"+ str(10000+rank)
     #print(filename)
     plt.plot(x, y)
     #plt.show()
-    plt.savefig(filename)
+    #plt.savefig(filename)
 
     return count, money
 
@@ -66,17 +76,17 @@ def drawHistGram(title ='fig1', data=[0], color='#0504aa'):
 
 if __name__ == '__main__':
     x = []
-    eachRoundCount = []
-    eachRoundMoney = []
+    eachrankCount = []
+    eachrankMoney = []
     totalPlayer = 100
     for r in range(1, totalPlayer):
-        count, money = playAndSave (round =r, b = 2.0, p=0.5, n=250, pre_money=100)
+        count, money = playAndSave (rank =r, b = 2.0, p=0.5, n=250, pre_money=100)
         print("玩家%-2d, 玩 %-3d轮后，钱包还剩 %5.0f" % (r, count, money))
         x.append(r)
-        eachRoundCount.append(count)
-        eachRoundMoney.append(money)
+        eachrankCount.append(count)
+        eachrankMoney.append(money)
 
-    payToPlayer = sum(eachRoundMoney)
+    payToPlayer = sum(eachrankMoney)
     playerPaid =  totalPlayer * 100
     winorloss  = playerPaid - payToPlayer
 
@@ -84,13 +94,13 @@ if __name__ == '__main__':
     plt.savefig("f1.png")
     plt.figure()
     
-    #eachRoundMoney = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 575.0, 525.0, 0.0, 0.0, 0.0, 0.0, 0.0, 525.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 325.0, 0.0, 0.0]
-    print(eachRoundCount)
-    print(eachRoundMoney)
-    drawHistGram('Money Balance', eachRoundMoney)
+    #eachrankMoney = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 575.0, 525.0, 0.0, 0.0, 0.0, 0.0, 0.0, 525.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 325.0, 0.0, 0.0]
+    print(eachrankCount)
+    print(eachrankMoney)
+    drawHistGram('Money Balance', eachrankMoney)
     plt.savefig("f2.png")
     plt.figure()
-    drawHistGram('Play Rounds', eachRoundCount)
+    drawHistGram('Play ranks', eachrankCount)
     plt.savefig("f3.png")
     plt.show()
     

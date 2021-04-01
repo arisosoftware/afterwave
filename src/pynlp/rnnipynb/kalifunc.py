@@ -24,8 +24,6 @@ def playAndSave(rank,b, p, n, pre_money):
     if rank == 1:
         print("本金%.4f\n赔率为%.4f\n胜率为%.4f\n投注比例 %.4f" % (pre_money, b, p, bidRate))
 
-    
-
     money = pre_money
     bidMoney =0
     x = [1]

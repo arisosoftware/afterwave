@@ -1,5 +1,7 @@
 package com.afterwave.core.util;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,9 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.util.StringUtils;
 
 
@@ -104,6 +109,41 @@ public class StrUtil {
 			}
 		}
 		return list;
+	}
+
+	
+	public static String formatContent(String content) {
+		Document parse = Jsoup.parse(content);
+		Elements tableElements = parse.select("table");
+		tableElements.forEach(element -> element.addClass("table table-bordered"));
+		Elements aElements = parse.select("p");
+		if (aElements != null && aElements.size() > 0) {
+			aElements.forEach(element -> {
+				try {
+					String href = element.text();
+					if (href.contains("//www.youtube.com/watch")) {
+						URL aUrl = new URL(href);
+						String query = aUrl.getQuery();
+						Map<String, Object> querys = StrUtil.formatParams(query);
+						element.text("");
+						element.addClass("embed-responsive embed-responsive-16by9");
+						element.append("<iframe class='embedded_video' src='https://www.youtube.com/embed/"
+								+ querys.get("v") + "' frameborder='0' allowfullscreen></iframe>");
+					} else if (href.contains("//v.youku.com/v_show/")) {
+						element.text("");
+						URL aUrl = new URL(href);
+						String _href = "https://player.youku.com/embed/"
+								+ aUrl.getPath().replace("/v_show/id_", "").replace(".html", "");
+						element.addClass("embedded_video_wrapper");
+						element.append("<iframe class='embedded_video' src='" + _href
+								+ "' frameborder='0' allowfullscreen></iframe>");
+					}
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			});
+		}
+		return parse.outerHtml();
 	}
 
 }

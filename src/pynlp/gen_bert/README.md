@@ -54,3 +54,16 @@
 ```python
 
 ```
+
+webgl test
+Canvas score - Test 1: 374 - Test 2: 1599
+
+WebGL score - Test 1: 649 - Test 2: 626
+
+Total score: 3248
+
+Your results compared to other users:
+
+You score better than 82% of all users so far!
+https://www.wirple.com/bmark/
+You score better than 86% of the people who use the same browser and OS!

@@ -22,7 +22,7 @@ hs_err_pid*
 *.zip
 *.tar.gz
 *.rar
-/target/
+
 
 # eclipse
 .settings/
@@ -34,7 +34,6 @@ logs/
 
 *velocity.log*
 
-/bin/
 
 ### NetBeans ###
 /nbproject/private/
@@ -78,5 +77,11 @@ venv/
 __pycache__/
 /bin/
 /logs/
-src/pynlp/gen_roberta/best_model_roberta.h5
-src/pynlp/rnn/data/rnn_tang_poetry_weights.hdf5
+/src/pynlp/gen_roberta/best_model_roberta.h5
+/src/pynlp/rnn/data/rnn_tang_poetry_weights.hdf5
+/.git/
+/target/
+/.dbeaver/
+/.apt_generated/
+/.apt_generated_tests/
+
